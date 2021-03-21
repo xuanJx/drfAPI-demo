@@ -1,0 +1,114 @@
+{% extends 'html_base.html' %}
+{% load static %}
+{% block cssblock %}
+    <link rel="stylesheet" href="{% static 'css/index_css.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6" style="position:fixed; left: 400px; width: 1000px">
+                {% include '_carousel.html' %}
+                <div class="book-recommend">
+                    <div class="book-recommend-box">
+                        <div id="book-recommend-p">
+                            <span id="book-recommend-title">今日推荐：</span>
+                            <span id="book-mostread-title">历史最多阅读量：</span>
+                            <ul id="recommend-book-ul"></ul>
+                            <ul id="mostread-book-ul"></ul>
+                            <button id="spawnButton">更换一组</button>
+                        </div>
+{#                        <div id="recommend-book-box">#}
+{#                        </div>#}
+                    </div>
+                </div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        var removeAulElement = ()=>{
+            var aulId = document.getElementById('recommend-book-ul')
+            while(aulId.hasChildNodes()){
+                aulId.removeChild(aulId.firstChild)
+            }
+        }
+
+        var mostRead = function(){
+            $.ajax({
+                type: 'GET',
+                url: 'http://127.0.0.1/api/v1/dragonapp/pageview/',
+                success: (data)=>{
+                    var dataArray = {}
+                    for(let i in data) {
+                        dataArray[data[i].read] = data[i].book
+                    }
+                    console.log(dataArray)
+                }
+            })
+        }
+
+        $(document).ready(()=>{
+            mostRead()
+            $.ajax({
+                type: 'GET',
+                url: 'http://127.0.0.1/api/v1/dragonapp/apibooks/',
+                success(data){
+                    for(var i = 1; i<6; i++){
+                        const num = parseInt(Math.random()*(data.length-i+1)+i)
+                        $.ajax({
+                            type: 'GET',
+                            url: 'http://127.0.0.1/api/v1/dragonapp/apibooks/' + num + '/',
+                            success(data) {
+                                var li = document.createElement('li')
+                                var a = document.createElement('a')
+                                li.setAttribute("id", 'li'+num)
+                                li.setAttribute("class", 'lic')
+                                li.setAttribute("style", 'list-style-type:none;')
+                                a.setAttribute("id", 'a' + num)
+                                a.setAttribute("href", "http://127.0.0.1/dragonapp/book/"+data.id+"/")
+                                document.getElementById('recommend-book-ul').appendChild(li)
+                                document.getElementById('li'+num).appendChild(a)
+                                document.getElementById('a'+num).innerHTML = data.book_name
+                            }
+                        })
+                    }
+                }
+            })
+        })
+
+        document.getElementById('spawnButton').onclick = ()=>{
+            removeAulElement()
+            $.ajax({
+                type: 'GET',
+                url: 'http://127.0.0.1/api/v1/dragonapp/apibooks/',
+                success(data){
+                    for(var i = 1; i<6; i++){
+                        const num = parseInt(Math.random()*(data.length-i+1)+i)
+                        $.ajax({
+                            type: 'GET',
+                            url: 'http://127.0.0.1/api/v1/dragonapp/apibooks/' + num + '/',
+                            success(data) {
+                                var li = document.createElement('li')
+                                var a = document.createElement('a')
+                                li.setAttribute("id", 'li'+num)
+                                li.setAttribute("class", 'lic')
+                                li.setAttribute("style", 'list-style-type:none;')
+                                a.setAttribute("id", 'a' + num)
+                                a.setAttribute("href", "http://127.0.0.1/dragonapp/book/"+data.id+"/")
+                                document.getElementById('recommend-book-ul').appendChild(li)
+                                document.getElementById('li'+num).appendChild(a)
+                                document.getElementById('a'+num).innerHTML = data.book_name
+                            }
+                        })
+                    }
+                }
+            })
+        }
+    </script>
+
+{% endblock %}

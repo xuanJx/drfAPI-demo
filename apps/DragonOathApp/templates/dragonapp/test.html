@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="{% static 'Vue/vue.js' %}"></script>
+</head>
+<body>
+    <div id="app">
+        aaa
+        {{msg}}
+    </div>
+    <script>
+        {#var data = {a: 1}#}
+        var vm = new Vue({
+            el: '#app',
+            data: {msg: 'hi vue'},
+            created: function(){
+                console.log('a is '+ this.msg)
+            }
+        })
+    </script>
+</body>
+</html>

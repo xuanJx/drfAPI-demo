@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+  <a class="navbar-brand"  href="{% url 'dragonapp:index-page' %}">静观书林</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'dragonapp:books-page' %}">短篇小说<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'dragonapp:authors-page' %}">著名作者简介</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'dragonapp:holmes-page' %}">福尔摩斯全集</a>
+      </li>
+      <li class="nav-item">
+        <a class='nav-link' href="{% url 'dragonapp:original-page' %}">原创投稿</a>
+      </li>
+    </ul>
+    <div class="input-group-prepend">
+      <input type="text" class="form-control" id='searchInput'>
+      <button type="button" class='btn btn-outline-light col-3'>搜索</button>
+    </div>
+    <div>&nbsp;&nbsp;</div>
+    <div>&nbsp;&nbsp;</div>
+    <a href="{% url 'dragonapp:login-page' %}" class="btn text-dark">登陆</a>&nbsp;&nbsp;<a href="{% url 'dragonapp:register-page' %}" class="btn text-dark">注册</a>
+  </div>
+</nav>
+<div id="autoDiv">
+    <ul id="ulNav" class="hidden"></ul>
+</div>

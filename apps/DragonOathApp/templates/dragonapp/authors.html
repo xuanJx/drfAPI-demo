@@ -1,0 +1,178 @@
+{% extends 'html_base.html' %}
+{% load static %}
+{% block cssblock %}
+    <link rel="stylesheet" href="{% static 'css/author_css.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div class="authorBox">
+                    <h1 class="ml-lg-5">作家</h1>
+                    <ul id="aul" class="cul"></ul>
+                    <ul class="pagination">
+                        <li class="page-item"><button class="page-link" id="pageA">1</button></li>
+                        <li class="page-item"><button class="page-link" id="pageB">2</button></li>
+                        <li class="page-item"><button class="page-link" id="pageC">3</button></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div  id="br" style='white-space:pre-wrap; width:900px;'></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        var removeAulElement = ()=>{
+            var aulId = document.getElementById('aul')
+            while(aulId.hasChildNodes()){
+                aulId.removeChild(aulId.firstChild)
+            }
+        }
+
+        var defaultHtml = ()=>{
+            removeAulElement()
+            $.ajax({
+                type: 'GET',
+                url: 'http://127.0.0.1/api/v1/dragonapp/author/',
+                success: (data)=>{
+                    for(var i=0;i<30;i++){
+                        var li = document.createElement('li')
+                        var a = document.createElement('a')
+                        li.setAttribute("id", 'li'+i)
+                        li.setAttribute("class", 'lic')
+                        li.setAttribute("style", 'list-style-type:none; float: left;\n' +
+                                                 'width: 33%;\n' +
+                                                 'margin-bottom: 20px;\n' +
+                                                 'line-height: 20px; ')
+                        a.setAttribute("id", 'a' + i)
+                        a.setAttribute("href", "http://127.0.0.1/dragonapp/author/"+data[i].id+"/")
+                        document.getElementById('aul').appendChild(li)
+                        document.getElementById('li'+i).appendChild(a)
+                        document.getElementById('a'+i).innerHTML = data[i].author_name
+                        const n = data[i].id
+                        document.getElementById('a'+i).onmouseover = ()=>{
+                            $.ajax({
+                                url: 'http://127.0.0.1/api/v1/dragonapp/author/'+n+'/',
+                                type: 'GET',
+                                success:(data)=>{
+                                    document.getElementById('br').innerHTML = data.brief
+                                }
+                            })
+                        }
+                    }
+                }
+            })
+        }
+
+        $(document).ready = defaultHtml()
+
+        $('#pageA').click(()=>{
+            removeAulElement()
+            $.ajax({
+                type: 'GET',
+                url: 'http://127.0.0.1/api/v1/dragonapp/author/',
+                success: (data)=>{
+                    for(var i=0;i<30;i++){
+                        var li = document.createElement('li')
+                        var a = document.createElement('a')
+                        li.setAttribute("id", 'li'+i)
+                        li.setAttribute("class", 'lic')
+                        li.setAttribute("style", 'list-style-type:none; float: left;\n' +
+                                                 'width: 33%;\n' +
+                                                 'margin-bottom: 20px;\n' +
+                                                 'line-height: 20px; ')
+                        a.setAttribute("id", 'a' + i)
+                        a.setAttribute("href", "http://127.0.0.1/dragonapp/author/"+data[i].id+"/")
+                        document.getElementById('aul').appendChild(li)
+                        document.getElementById('li'+i).appendChild(a)
+                        document.getElementById('a'+i).innerHTML = data[i].author_name
+                        const n = data[i].id
+                        document.getElementById('a'+i).onmouseover = ()=>{
+                            $.ajax({
+                                url: 'http://127.0.0.1/api/v1/dragonapp/author/'+n+'/',
+                                type: 'GET',
+                                success:(data)=>{
+                                    document.getElementById('br').innerHTML = data.brief
+                                }
+                            })
+                        }
+                    }
+                }
+            })
+        })
+
+        $('#pageB').click(()=>{
+            removeAulElement()
+            $.ajax({
+                type: 'GET',
+                url: 'http://127.0.0.1/api/v1/dragonapp/author/',
+                success: (data)=>{
+                    for(var i=30;i<60;i++){
+                        var li = document.createElement('li')
+                        var a = document.createElement('a')
+                        li.setAttribute("id", 'li'+i)
+                        li.setAttribute("class", 'lic')
+                        li.setAttribute("style", 'list-style-type:none')
+                        a.setAttribute("id", 'a' + i)
+                        a.setAttribute("href", "http://127.0.0.1/dragonapp/author/"+data[i].id+"/")
+                        document.getElementById('aul').appendChild(li)
+                        document.getElementById('li'+i).appendChild(a)
+                        document.getElementById('a'+i).innerHTML = data[i].author_name
+                        const n = data[i].id
+                        document.getElementById('a'+i).onmouseover = ()=>{
+                            $.ajax({
+                                url: 'http://127.0.0.1/api/v1/dragonapp/author/'+n+'/',
+                                type: 'GET',
+                                success:(data)=>{
+                                    document.getElementById('br').innerHTML = data.brief
+                                }
+                            })
+                        }
+                    }
+                }
+            })
+        })
+
+        $('#pageC').click(()=>{
+            removeAulElement()
+            $.ajax({
+                type: 'GET',
+                url: 'http://127.0.0.1/api/v1/dragonapp/author/',
+                success: (data)=>{
+                    for(var i=60;i<data.length;i++){
+                        var li = document.createElement('li')
+                        var a = document.createElement('a')
+                        li.setAttribute("id", 'li'+i)
+                        li.setAttribute("class", 'lic')
+                        li.setAttribute("style", 'list-style-type:none')
+                        a.setAttribute("id", 'a' + i)
+                        a.setAttribute("href", "http://127.0.0.1/dragonapp/author/"+data[i].id+"/")
+                        document.getElementById('aul').appendChild(li)
+                        document.getElementById('li'+i).appendChild(a)
+                        document.getElementById('a'+i).innerHTML = data[i].author_name
+                        const n = data[i].id
+                        document.getElementById('a'+i).onmouseover = ()=>{
+                            $.ajax({
+                                url: 'http://127.0.0.1/api/v1/dragonapp/author/'+n+'/',
+                                type: 'GET',
+                                success:(data)=>{
+                                    document.getElementById('br').innerHTML = data.brief
+                                }
+                            })
+                        }
+                    }
+                }
+            })
+        })
+    </script>
+{% endblock %}

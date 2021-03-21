@@ -1,0 +1,109 @@
+{% extends 'html_base.html' %}
+{% load static %}
+
+{% block cssblock %}
+    <link rel="stylesheet" href="{% static 'css/holmes_css.css' %}">
+{% endblock %}
+{% block content %}
+ <div class="container-fluid">
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <div class="authorBox">
+                <h1 class="ml-lg-5">福尔摩斯探案全集</h1>
+                <ul id="aul" class="cul"></ul>
+                <ul class="pagination" id="paginationId">
+                </ul>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="container-fluid">
+                <div class="row">
+                    <div  id="br"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascript %}
+    <script>
+        var removeAulElement = ()=>{
+            var aulId = document.getElementById('aul')
+            while(aulId.hasChildNodes()){
+                aulId.removeChild(aulId.firstChild)
+            }
+        }
+        var defaultHtml = ()=>{
+            removeAulElement()
+            $.ajax({
+                type: 'GET',
+                url: 'http://127.0.0.1/api/v1/dragonapp/holmes/',
+                success: (data)=>{
+                    for(var i=0;i<30;i++){
+                        var li = document.createElement('li')
+                        var a = document.createElement('a')
+                        li.setAttribute("id", 'li'+i)
+                        li.setAttribute("class", 'lic')
+                        li.setAttribute("style", 'list-style-type:none; float: left;\n' +
+                                                 'width: 33%;\n' +
+                                                 'margin-bottom: 20px;\n' +
+                                                 'line-height: 20px;')
+                        a.setAttribute("id", 'a' + i)
+                        a.setAttribute('class', 'ac')
+                        a.setAttribute("href", "http://127.0.0.1/dragonapp/holmes/"+data[i].id+"/")
+                        document.getElementById('aul').appendChild(li)
+                        document.getElementById('li'+i).appendChild(a)
+                        document.getElementById('a'+i).innerHTML = data[i].book_name
+                        }
+                    }
+                })
+            }
+        var isAnim = false
+        $(document).ready(()=>{
+            $.ajax({
+                url: 'http://127.0.0.1/api/v1/dragonapp/holmes/',
+                type: 'GET',
+                success(data){
+                    var pageNum = Math.ceil(data.length/30)
+                    for(var i = 0; i<pageNum; i++){
+                        let n = i
+                        var li = document.createElement('li')
+                        var btn = document.createElement('button')
+                        li.setAttribute('class', "page-item")
+                        li.setAttribute('id', "li"+i)
+                        btn.setAttribute('class', "page-link")
+                        btn.setAttribute('id', "page"+i)
+                        btn.innerHTML = i + 1
+                        document.getElementById('paginationId').appendChild(li)
+                        document.getElementById('li'+i).appendChild(btn)
+                        if(!isAnim){
+                            defaultHtml()
+                            isAnim = true
+                        }
+                        document.getElementById('page'+n).onclick = ()=>{
+                            removeAulElement()
+                            var j = n+1
+                            for(var k = j*30-30; k<j*30; k++){
+                                var li = document.createElement('li')
+                                var a = document.createElement('a')
+                                li.setAttribute("id", 'li'+k)
+                                li.setAttribute("class", 'lic')
+                                li.setAttribute("style", 'list-style-type:none; float: left;\n' +
+                                                         'width: 33%;\n' +
+                                                         'margin-bottom: 20px;\n' +
+                                                         'line-height: 20px; ')
+                                a.setAttribute("id", 'a' + k)
+                                a.setAttribute('class', 'ac')
+                                a.setAttribute("href", "http://127.0.0.1/dragonapp/holmes/"+data[k].id+"/")
+                                document.getElementById('aul').appendChild(li)
+                                document.getElementById('li'+k).appendChild(a)
+                                document.getElementById('a'+k).innerHTML = data[k].book_name
+                            }
+                        }
+                    }
+                }
+            })
+        })
+    </script>
+{% endblock %}

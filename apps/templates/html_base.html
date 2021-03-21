@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% include 'bootstrap_css.html' %}
+    <link rel="stylesheet" href="{% static 'css/index_css.css' %}">
+    {% block cssblock %}
+    {% endblock %}
+</head>
+<body style="background-color: #a3fffc; width: 1919px; float: left;">
+    {% include '_nav.html' %}
+    {% block content %}
+    {% endblock %}
+    {% include 'jquery_js.html' %}
+    <script>
+        var removeAulElement = ()=>{
+            var aulId = document.getElementById('ulNav')
+            while(aulId.hasChildNodes()){
+                aulId.removeChild(aulId.firstChild)
+            }
+        }
+
+        function inputVal(val){
+            $('#searchInput').val(val)
+            document.getElementById('ulNav').setAttribute('class', 'hidden')
+        }
+
+        $("#searchInput").on("input propertychange", function (event) {
+            $.ajax({
+                url: 'http://127.0.0.1/api/v1/dragonapp/apibooks/',
+                success: (data) => {
+                    var dataArray = []
+                    for (i = 0; i < data.length; i++) {
+                        dataArray.push(data[i].book_name)
+                    }
+                    var ulNav = document.getElementById('ulNav')
+                    if ($(this).val() !== ''){
+                        ulNav.innerHTML = ""
+                        for (var i = 0; i < dataArray.length; i++) {
+                            if (dataArray[i].indexOf(document.getElementById('searchInput').value.toUpperCase()) == 0){
+                                var li = document.createElement("li")
+                                var a = document.createElement('a')
+                                li.setAttribute('style', 'list-style-type: none;')
+                                a.innerHTML = dataArray[i]
+                                {#dictA = [{['a'+i]: dataArray[i]}]#}
+                                {#console.log(dictA)#}
+                                a.setAttribute('class', 'aMenu')
+                                a.setAttribute('id', 'a'+i)
+                                li.appendChild(a)
+                                ulNav.appendChild(li)
+                                document.getElementById('ulNav').removeAttribute('class')
+                            }
+                        }
+                    } else if($(this).val()===''){
+                        document.getElementById('ulNav').setAttribute('class', 'hidden')
+                    }
+                }
+            })
+        })
+    </script>
+    {% block javascript %}
+    {% endblock %}
+</body>
+
+</html>

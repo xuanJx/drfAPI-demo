@@ -1,0 +1,80 @@
+{% extends 'html_base.html' %}
+{% load static %}
+{% block cssblock %}
+    <link rel="stylesheet" href="{% static 'css/original_css.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class='col-4'>
+                            <div class="original-box">
+                                <span>请输入书名:</span>
+                                <input type="text" style="width: 265px;">
+                                <div class="chapter-box" id="chapbox" style="border: solid 1px green; height: 820px; width: 266px">
+                                    <a id="aminus" style="display: none"><img src="{% static 'imgs/icon/-.png' %}" alt="-"></a>
+                                    <a id="aplus"><img src="{% static 'imgs/icon/+.png' %}" alt="+"></a>
+                                    <a href="#">第一卷</a>
+                                    <div class="chapter-content" style="display: none" id="ajiantou">
+                                        <a><img src="{% static 'imgs/icon/jiantou.png' %}" alt="jiantou"></a>
+                                        <input type="text" placeholder="第1章节">
+                                        <a class="bplus"><img src="{% static 'imgs/icon/+.png' %}" alt="+"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="row">
+                                <span>选择字体格式：</span>
+                                <ul class="list-unstyled">
+                                    <li class="typeFace"><button>B</button></li>
+                                    <li class="typeFace"><button>I</button></li>
+                                    <li class="typeFace"><button>U</button></li>
+                                </ul>
+                            </div>
+                            <div class="content" style="border: solid 1px red; height: 828px; width: 563px; float: right;">
+                                <textarea rows="34.5" cols="77"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        {#var defaultHtml = ()=>{#}
+        {#    var aplus = document.createElement("a")#}
+        {#    var aminus = document.createElement("a")#}
+        {#    var aimg = document.createElement("img")#}
+        {#}#}}
+
+        document.getElementById('aplus').onclick = ()=>{
+            document.getElementById('aplus').setAttribute('style', 'display: none')
+            document.getElementById('aminus').removeAttribute('style')
+            document.getElementById('ajiantou').removeAttribute('style')
+        }
+
+        document.getElementById('aminus').onclick = ()=>{
+            document.getElementById('aminus').setAttribute('style', 'display: none')
+            document.getElementById('ajiantou').setAttribute('style', 'display: none')
+            document.getElementById('aplus').removeAttribute('style')
+        }
+
+        {#var bplus = document.getElementsByClassName('bplus')#}
+        {#for(var i in bplus){#}
+        {#    bplus[i].onclick = ()=>{#}
+        {#        #}
+        {#    }#}
+        {##}
+
+
+    </script>
+{% endblock %}

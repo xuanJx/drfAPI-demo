@@ -1,0 +1,40 @@
+#book-recommend-p{
+    border: solid 1px;
+    height: 190px;
+}
+
+#book-mostread-title{
+    float: right;
+    margin-right: 150px;
+}
+
+#recommend-book-box{
+    border: solid 1px #20c997;
+    height: 400px;
+}
+
+div{
+    white-space:nowrap;
+}
+
+#ulNav{
+    float: left;
+    margin-right: 340px;
+    border: solid 1px black;
+    background-color: white;
+    position:fixed;
+    left: 1500px;
+    width: 200px;
+}
+
+.aMenu:hover{
+    background-color: #9fcdff;
+    cursor: pointer
+}
+
+.hidden{
+    display: none;
+}
+
+
+
