@@ -7,7 +7,8 @@
 {% block content %}
  <div class="container-fluid">
     <div class="row">
-        <div class="col-3"></div>
+        <div class="col-3">
+        </div>
         <div class="col-6">
             <div class="authorBox">
                 <h1 class="ml-lg-5">福尔摩斯探案全集</h1>
@@ -51,6 +52,8 @@
                                                  'line-height: 20px;')
                         a.setAttribute("id", 'a' + i)
                         a.setAttribute('class', 'ac')
+                        a.setAttribute('style', 'white-space: pre-wrap;\n'+
+                                                'margin: 5px')
                         a.setAttribute("href", "http://127.0.0.1/dragonapp/holmes/"+data[i].id+"/")
                         document.getElementById('aul').appendChild(li)
                         document.getElementById('li'+i).appendChild(a)
@@ -77,6 +80,10 @@
                         btn.innerHTML = i + 1
                         document.getElementById('paginationId').appendChild(li)
                         document.getElementById('li'+i).appendChild(btn)
+                        btn.addEventListener("click", function () {
+                            document.
+                            this.setAttribute('class', 'btnDisable')
+                        })
                         if(!isAnim){
                             defaultHtml()
                             isAnim = true
@@ -95,6 +102,8 @@
                                                          'line-height: 20px; ')
                                 a.setAttribute("id", 'a' + k)
                                 a.setAttribute('class', 'ac')
+                                a.setAttribute('style', 'white-space: pre-wrap;\n'+
+                                                         'margin: 5px')
                                 a.setAttribute("href", "http://127.0.0.1/dragonapp/holmes/"+data[k].id+"/")
                                 document.getElementById('aul').appendChild(li)
                                 document.getElementById('li'+k).appendChild(a)
